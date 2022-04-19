@@ -37,7 +37,8 @@ func RunServer() {
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins: []string{"*"},
 		AllowMethods: []string{
-			http.MethodGet, http.MethodHead, http.MethodPut, http.MethodPatch, http.MethodPost, http.MethodDelete},
+			http.MethodGet, http.MethodHead, http.MethodPut, http.MethodPatch, http.MethodPost, http.MethodDelete,
+		},
 	}))
 
 	customValidator := validate.NewValidator()
@@ -62,6 +63,8 @@ func RunServer() {
 	handler.NewCategoryHandler(e, categoryService)
 	handler.NewTagHandler(e, tagService)
 	handler.NewRegionHandler(e)
+
+	e.Static("/api/images", "images")
 
 	// Starting server
 	go func() {
