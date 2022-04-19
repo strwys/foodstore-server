@@ -1,0 +1,45 @@
+package model
+
+import (
+	"time"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
+)
+
+type Product struct {
+	ID          primitive.ObjectID `bson:"_id,omitempty"  json:"_id"`
+	Name        string             `bson:"name"           json:"name"        validate:"required,min=3,max=45"`
+	Description string             `bson:"description"    json:"description" validate:"required"`
+	Price       float32            `bson:"price"          json:"price"`
+	ImageURL    string             `bson:"image_url"      json:"image_url"`
+	CreatedAt   time.Time          `bson:"created_at"     json:"created_at"`
+	UpdatedAt   time.Time          `bson:"updated_at"     json:"updated_at"`
+	Category    Category           `bson:"category"       json:"category"`
+	Tags        []Tag              `bson:"tags"           json:"tags"`
+}
+
+type ReadProductRequest struct {
+	Limit    int64
+	Offset   int64
+	Keyword  string
+	Category string
+	Tags     []string
+	ItemIDs  []string
+}
+
+type ProductRequest struct {
+	ID          primitive.ObjectID `bson:"_id,omitempty" json:"_id"`
+	Name        string             `bson:"name"          json:"name"        validate:"required,min=3,max=45"`
+	Description string             `bson:"description"   json:"description" validate:"required"`
+	Price       float32            `bson:"price"         json:"price"`
+	ImageURL    string             `bson:"image_url"     json:"image_url"`
+	CategoryID  string             `bson:"category_id"   json:"category_id"`
+	Tags        []string           `bson:"tags"          json:"-"`
+}
+
+func (p *Product) BeforeSave() Product {
+	p.ImageURL = "images/default.jpg"
+	p.CreatedAt = time.Now()
+	p.UpdatedAt = time.Now()
+	return *p
+}
