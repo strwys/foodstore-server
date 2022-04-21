@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"os"
 	"reflect"
-	"strconv"
 	"strings"
 	"time"
 
@@ -39,18 +38,13 @@ func NewProductHandler(e *echo.Echo, s service.ProductService) {
 func (p *product) Read(c echo.Context) error {
 	var (
 		ctx = c.Request().Context()
+		req = model.ReadProductRequest{}
 	)
 
-	limit, _ := strconv.Atoi(c.QueryParam("limit"))
-	offset, _ := strconv.Atoi(c.QueryParam("offset"))
-	query := c.Request().URL.Query()
-
-	req := model.ReadProductRequest{
-		Limit:    int64(limit),
-		Offset:   int64(offset),
-		Keyword:  c.QueryParam("q"),
-		Category: c.QueryParam("category"),
-		Tags:     query["tags"],
+	err := utils.DecodeQueryParams(c.QueryString(), "params", &req)
+	if err != nil {
+		logger.Log.Error(err.Error())
+		return c.JSON(utils.SetHTTPStatusCode(err), model.ResponseError{Message: err.Error()})
 	}
 
 	data, total, err := p.service.Read(ctx, req)

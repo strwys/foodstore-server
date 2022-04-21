@@ -3,12 +3,15 @@ package utils
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
+	"net/url"
 	"reflect"
 	"strings"
 
 	"github.com/cecepsprd/foodstore-server/constans"
 	"github.com/cecepsprd/foodstore-server/model"
+	"github.com/cecepsprd/foodstore-server/utils/logger"
 	"github.com/labstack/echo"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"golang.org/x/crypto/bcrypt"
@@ -57,6 +60,22 @@ func MappingRequest(request interface{}, model interface{}) error {
 	// bind json to struct
 	if err := json.Unmarshal(jsonRecords, model); err != nil {
 		return fmt.Errorf("Error decode json to struct: %s", err.Error())
+	}
+
+	return nil
+}
+
+func DecodeQueryParams(queryStr string, key string, req interface{}) error {
+	params, err := url.ParseQuery(queryStr)
+	if err != nil {
+		logger.Log.Error(err.Error())
+		return err
+	}
+
+	err = json.Unmarshal([]byte(params.Get(key)), &req)
+	if err != nil {
+		log.Fatal(err.Error())
+		return err
 	}
 
 	return nil
