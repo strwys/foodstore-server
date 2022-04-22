@@ -19,12 +19,12 @@ type Product struct {
 }
 
 type ReadProductRequest struct {
-	Limit    int64
-	Offset   int64
-	Keyword  string
-	Category string
-	Tags     []string
-	ItemIDs  []string
+	Limit    int64    `json:"limit"`
+	Offset   int64    `json:"skip"`
+	Keyword  string   `json:"q"`
+	Category string   `json:"category"`
+	Tags     []string `json:"tags"`
+	ItemIDs  []string `json:"-"`
 }
 
 type ProductRequest struct {

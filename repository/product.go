@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"fmt"
 	"reflect"
 
 	"github.com/cecepsprd/foodstore-server/model"
@@ -45,10 +46,10 @@ func (repo *mysqlProductRepository) Read(ctx context.Context, req model.ReadProd
 		}
 
 		if !reflect.ValueOf(req.Category).IsZero() {
-			filter["category.name"] = bson.M{"$regex": primitive.Regex{Pattern: req.Category, Options: "i"}}
+			filter["category"] = utils.ConvertPrimitiveID(req.Category)
 		}
 
-		if !reflect.ValueOf(req.Category).IsZero() {
+		if len(req.Tags) > 0 {
 			filter["tags.name"] = bson.M{"$in": req.Tags}
 		}
 
@@ -82,6 +83,8 @@ func (repo *mysqlProductRepository) Read(ctx context.Context, req model.ReadProd
 	if err := g.Wait(); err != nil {
 		return nil, 0, err
 	}
+
+	fmt.Println("---->", response)
 
 	return response, total, nil
 }
@@ -119,7 +122,7 @@ func (repo *mysqlProductRepository) Delete(ctx context.Context, productID string
 	_, err := repo.db.Collection("products").
 		DeleteOne(
 			ctx,
-			bson.M{"_id": utils.GetPrimitiveID(productID)},
+			bson.M{"_id": utils.ConvertPrimitiveID(productID)},
 		)
 
 	if err != nil {
@@ -134,7 +137,7 @@ func (repo *mysqlProductRepository) ReadByID(ctx context.Context, id string) (*m
 	err := repo.db.Collection("products").
 		FindOne(
 			ctx,
-			bson.M{"_id": utils.GetPrimitiveID(id)},
+			bson.M{"_id": utils.ConvertPrimitiveID(id)},
 		).
 		Decode(&product)
 	if err != nil {
@@ -148,7 +151,7 @@ func (repo *mysqlProductRepository) ReadCategoryByID(ctx context.Context, id str
 	var category model.Category
 	err := repo.db.Collection("category").FindOne(
 		ctx,
-		bson.M{"_id": utils.GetPrimitiveID(id)},
+		bson.M{"_id": utils.ConvertPrimitiveID(id)},
 	).Decode(&category)
 
 	if err != nil {

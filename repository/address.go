@@ -76,7 +76,7 @@ func (repo *mysqlAddressRepository) Delete(ctx context.Context, productID string
 	_, err := repo.db.Collection("products").
 		DeleteOne(
 			ctx,
-			bson.M{"_id": utils.GetPrimitiveID(productID)},
+			bson.M{"_id": utils.ConvertPrimitiveID(productID)},
 		)
 
 	if err != nil {

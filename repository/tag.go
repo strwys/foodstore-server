@@ -81,7 +81,7 @@ func (repo *mysqlTagRepository) Delete(ctx context.Context, tagID string) error 
 	_, err := repo.db.Collection("tag").
 		DeleteOne(
 			ctx,
-			bson.M{"_id": utils.GetPrimitiveID(tagID)},
+			bson.M{"_id": utils.ConvertPrimitiveID(tagID)},
 		)
 
 	if err != nil {
@@ -96,7 +96,7 @@ func (repo *mysqlTagRepository) ReadByID(ctx context.Context, id string) (*model
 	err := repo.db.Collection("tag").
 		FindOne(
 			ctx,
-			bson.M{"_id": utils.GetPrimitiveID(id)},
+			bson.M{"_id": utils.ConvertPrimitiveID(id)},
 		).
 		Decode(&tag)
 	if err != nil {

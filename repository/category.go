@@ -14,8 +14,8 @@ type CategoryRepository interface {
 	Read(context.Context, model.Paging) ([]model.Category, error)
 	Create(ctx context.Context, category model.Category) error
 	Update(ctx context.Context, category model.Category) (*model.Category, error)
-	ReadByID(ctx context.Context, id string) (*model.Category, error)
 	Delete(ctx context.Context, id string) error
+	ReadByID(ctx context.Context, id string) (*model.Category, error)
 }
 
 type mysqlCategoryRepository struct {
@@ -81,7 +81,7 @@ func (repo *mysqlCategoryRepository) Delete(ctx context.Context, categoryID stri
 	_, err := repo.db.Collection("category").
 		DeleteOne(
 			ctx,
-			bson.M{"_id": utils.GetPrimitiveID(categoryID)},
+			bson.M{"_id": utils.ConvertPrimitiveID(categoryID)},
 		)
 
 	if err != nil {
@@ -96,7 +96,7 @@ func (repo *mysqlCategoryRepository) ReadByID(ctx context.Context, id string) (*
 	err := repo.db.Collection("category").
 		FindOne(
 			ctx,
-			bson.M{"_id": utils.GetPrimitiveID(id)},
+			bson.M{"_id": utils.ConvertPrimitiveID(id)},
 		).
 		Decode(&Category)
 	if err != nil {

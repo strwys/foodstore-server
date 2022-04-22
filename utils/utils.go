@@ -3,7 +3,6 @@ package utils
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 	"net/url"
 	"reflect"
@@ -17,15 +16,18 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func GetPrimitiveID(id string) primitive.ObjectID {
-	objectID, _ := primitive.ObjectIDFromHex(id)
+func ConvertPrimitiveID(id string) primitive.ObjectID {
+	objectID, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		logger.Log.Error(err.Error())
+	}
 	return objectID
 }
 
-func GetPrimitiveIDs(ids []string) []primitive.ObjectID {
+func ConvertPrimitiveIDs(ids []string) []primitive.ObjectID {
 	var primitiveIDs []primitive.ObjectID
 	for _, id := range ids {
-		primitiveIDs = append(primitiveIDs, GetPrimitiveID(id))
+		primitiveIDs = append(primitiveIDs, ConvertPrimitiveID(id))
 	}
 	return primitiveIDs
 }
@@ -44,6 +46,7 @@ func GetParamsValue(c echo.Context, from interface{}, to interface{}) {
 func HashPassword(password string) (hashedPassword string, err error) {
 	hashed, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.MinCost)
 	if err != nil {
+		logger.Log.Error(err.Error())
 		return "", err
 	}
 
@@ -74,7 +77,7 @@ func DecodeQueryParams(queryStr string, key string, req interface{}) error {
 
 	err = json.Unmarshal([]byte(params.Get(key)), &req)
 	if err != nil {
-		log.Fatal(err.Error())
+		logger.Log.Error(err.Error())
 		return err
 	}
 
