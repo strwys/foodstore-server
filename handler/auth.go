@@ -30,21 +30,18 @@ func NewAuthHandler(e *echo.Echo, authService service.AuthService, userService s
 	e.POST("/api/auth/register", handler.Register)
 }
 
-func (ah *AuthHandler) Login(c echo.Context) error {
+func (h *AuthHandler) Login(c echo.Context) error {
 	var (
 		req = model.LoginRequest{}
 		ctx = c.Request().Context()
 	)
 
-	err := c.Bind(&req)
-	if err != nil {
+	if err := c.Bind(&req); err != nil {
 		logger.Log.Error(err.Error())
 		return c.JSON(http.StatusUnprocessableEntity, model.ResponseError{Message: err.Error()})
 	}
 
-	fmt.Println("->", req)
-
-	response, err := ah.authService.Login(ctx, req)
+	response, err := h.authService.Login(ctx, req)
 	if err != nil {
 		return c.JSON(utils.SetHTTPStatusCode(err), model.ResponseError{Message: err.Error()})
 	}
@@ -52,7 +49,7 @@ func (ah *AuthHandler) Login(c echo.Context) error {
 	return c.JSON(http.StatusCreated, response)
 }
 
-func (u *AuthHandler) Register(c echo.Context) error {
+func (h *AuthHandler) Register(c echo.Context) error {
 	var (
 		ctx  = c.Request().Context()
 		req  = model.RegisterRequest{}
@@ -75,7 +72,7 @@ func (u *AuthHandler) Register(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, model.ResponseError{Message: err.Error()})
 	}
 
-	err = u.userService.Create(ctx, user)
+	err = h.userService.Create(ctx, user)
 	if err != nil {
 		logger.Log.Error(err.Error())
 		return c.JSON(utils.SetHTTPStatusCode(err), model.ResponseError{Message: err.Error()})

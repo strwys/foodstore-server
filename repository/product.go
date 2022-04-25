@@ -2,7 +2,6 @@ package repository
 
 import (
 	"context"
-	"fmt"
 	"reflect"
 
 	"github.com/cecepsprd/foodstore-server/model"
@@ -83,8 +82,6 @@ func (repo *mysqlProductRepository) Read(ctx context.Context, req model.ReadProd
 	if err := g.Wait(); err != nil {
 		return nil, 0, err
 	}
-
-	fmt.Println("---->", response)
 
 	return response, total, nil
 }

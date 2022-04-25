@@ -1,55 +1,52 @@
 package service
 
 import (
+	"context"
 	"time"
 
+	"github.com/cecepsprd/foodstore-server/model"
 	"github.com/cecepsprd/foodstore-server/repository"
+	"github.com/cecepsprd/foodstore-server/utils/logger"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type CartService interface {
-	// Read(context.Context, model.Paging) ([]model.Tag, error)
-	// Create(ctx context.Context, tag model.Tag) error
-	// Update(ctx context.Context, req []model.CartItem) (*model.CartItem, error)
-	// Delete(ctx context.Context, id string) error
-	// ReadByID(ctx context.Context, id string) (*model.Tag, error)
+	Read(ctx context.Context, userid primitive.ObjectID) ([]model.CartItem, error)
+	Update(ctx context.Context, userid primitive.ObjectID, req []model.CartItem) error
 }
 
 type cart struct {
-	productRepository repository.ProductRepository
-	contextTimeout    time.Duration
+	cartRepository repository.CartRepository
+	contextTimeout time.Duration
 }
 
-func NewCartService(productRepository repository.ProductRepository, timeout time.Duration) CartService {
+func NewCartService(cartRepository repository.CartRepository, timeout time.Duration) CartService {
 	return &cart{
-		productRepository: productRepository,
-		contextTimeout:    timeout,
+		cartRepository: cartRepository,
+		contextTimeout: timeout,
 	}
 }
 
-// func (s *cart) Update(ctx context.Context, request []model.CartItem) (*model.CartItem, error) {
-// 	var (
-// 		itemIDs []string
-// 	)
+func (s *cart) Read(ctx context.Context, userid primitive.ObjectID) ([]model.CartItem, error) {
+	carts, err := s.cartRepository.Read(ctx, userid)
+	if err != nil {
+		logger.Log.Error(err.Error())
+		return nil, err
+	}
 
-// 	for _, cartItem := range request {
-// 		itemIDs = append(itemIDs, cartItem.Product.ID.String())
-// 	}
+	return carts, nil
+}
 
-// 	products, _, err := s.productRepository.Read(ctx, model.ReadProductRequest{ItemIDs: itemIDs})
-// 	if err != nil {
-// 		logger.Log.Error(err.Error())
-// 		return nil, err
-// 	}
+func (s *cart) Update(ctx context.Context, userid primitive.ObjectID, request []model.CartItem) error {
 
-// 	return nil, nil
-// }
+	for _, cart := range request {
+		cart.UserID = userid
+		cart.ProductID = cart.ID
+		if err := s.cartRepository.Update(ctx, userid, cart); err != nil {
+			logger.Log.Error(err.Error())
+			return err
+		}
+	}
 
-// func (s *tag) Read(ctx context.Context, req model.Paging) ([]model.Tag, error) {
-// 	categories, err := s.repo.Read(ctx, req)
-// 	if err != nil {
-// 		logger.Log.Error(err.Error())
-// 		return nil, err
-// 	}
-
-// 	return categories, nil
-// }
+	return nil
+}

@@ -11,6 +11,7 @@ import (
 	"github.com/cecepsprd/foodstore-server/constans"
 	"github.com/cecepsprd/foodstore-server/model"
 	"github.com/cecepsprd/foodstore-server/utils/logger"
+	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"golang.org/x/crypto/bcrypt"
@@ -82,6 +83,12 @@ func DecodeQueryParams(queryStr string, key string, req interface{}) error {
 	}
 
 	return nil
+}
+
+func GetUserIDByContext(ctx echo.Context) primitive.ObjectID {
+	u := ctx.Get("user")
+	claims := u.(*jwt.Token).Claims.(jwt.MapClaims)
+	return ConvertPrimitiveID(claims["id"].(string))
 }
 
 func SetHTTPStatusCode(err error) int {

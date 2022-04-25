@@ -8,6 +8,7 @@ const (
 	CategoryEntity        = `Category`
 	TagEntity             = `Tag`
 	DeliveryAddressEntity = `DeliveryAddress`
+	CartEntity            = `Cart`
 )
 
 const (
@@ -17,6 +18,7 @@ const (
 	MessageSuccessUpdate      = "Success update %s with id %s"
 	MessageSuccessDelete      = "Success delete %s with id %s"
 	MessageSuccessUploadImage = "Success upload %s image"
+	MessageSuccessUpdateCart  = "Success update Cart"
 )
 
 const (
