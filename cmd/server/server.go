@@ -52,6 +52,7 @@ func RunServer() {
 	categoryRepository := repository.NewCategoryRepository(db)
 	tagRepository := repository.NewTagRepository(db)
 	cartRepository := repository.NewCartRepository(db)
+	addressRepository := repository.NewAddressRepository(db)
 
 	userService := service.NewUserService(userRepository, timeoutContext)
 	authService := service.NewAuthService(userService, cfg.App.JWTSecret)
@@ -59,6 +60,7 @@ func RunServer() {
 	categoryService := service.NewCategoryService(categoryRepository, timeoutContext)
 	tagService := service.NewTagService(tagRepository, timeoutContext)
 	cartService := service.NewCartService(cartRepository, timeoutContext)
+	addressService := service.NewAddressService(addressRepository, timeoutContext)
 
 	handler.NewAuthHandler(e, authService, userService)
 	handler.NewProductHandler(e, productService)
@@ -66,6 +68,7 @@ func RunServer() {
 	handler.NewTagHandler(e, tagService)
 	handler.NewRegionHandler(e)
 	handler.NewCartHandler(e, cartService)
+	handler.NewDeliveryAddressHandler(e, addressService)
 
 	e.Static("/api/images", "images")
 

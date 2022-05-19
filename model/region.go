@@ -8,8 +8,8 @@ import (
 
 // Kecamatan
 type District struct {
-	Name        string `json:"name" csv:"kode"`
-	Code        string `json:"code" csv:"nama"`
+	Code        string `json:"code" csv:"kode"`
+	Name        string `json:"name" csv:"nama"`
 	RegencyCode string `csv:"kode_kabupaten"`
 }
 

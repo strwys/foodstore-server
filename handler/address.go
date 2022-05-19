@@ -21,10 +21,10 @@ func NewDeliveryAddressHandler(e *echo.Echo, s service.AddressService) {
 		service: s,
 	}
 
-	e.POST("/api/address", handler.Create, auth())
-	e.GET("/api/address", handler.Read, auth())
-	e.PUT("/api/address/:id", handler.Update, auth())
-	e.DELETE("/api/address/:id", handler.Delete, auth())
+	e.POST("/api/delivery-addresses", handler.Create, auth())
+	e.GET("/api/delivery-addresses", handler.Read, auth())
+	e.PUT("/api/delivery-addresses/:id", handler.Update, auth())
+	e.DELETE("/api/delivery-addresses/:id", handler.Delete, auth())
 }
 
 func (p *address) Read(c echo.Context) error {
