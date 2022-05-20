@@ -23,6 +23,7 @@ func NewCartHandler(e *echo.Echo, s service.CartService) {
 
 	e.GET("/api/carts", handler.Read, auth())
 	e.PUT("/api/carts", handler.Update, auth())
+	e.DELETE("/api/carts/:item_id", handler.DeleteByItemID, auth())
 }
 
 func (h *cart) Read(c echo.Context) error {
@@ -69,6 +70,25 @@ func (h *cart) Update(c echo.Context) error {
 	return c.JSON(http.StatusOK, model.APIResponse{
 		Code:    http.StatusOK,
 		Message: fmt.Sprintf(constans.MessageSuccessUpdateCart),
+		Data:    nil,
+	})
+}
+
+func (h *cart) DeleteByItemID(c echo.Context) error {
+	var (
+		ctx = c.Request().Context()
+	)
+
+	itemID := utils.ConvertPrimitiveID(c.Param("item_id"))
+
+	err := h.service.DeleteByItemID(ctx, utils.GetUserIDByContext(c), itemID)
+	if err != nil {
+		return c.JSON(utils.SetHTTPStatusCode(err), model.ResponseError{Message: err.Error()})
+	}
+
+	return c.JSON(http.StatusOK, model.APIResponse{
+		Code:    http.StatusOK,
+		Message: fmt.Sprintf(constans.MessageSuccessDelete, constans.CartEntity, itemID),
 		Data:    nil,
 	})
 }

@@ -36,7 +36,7 @@ func (h *invoice) Read(c echo.Context) error {
 
 	return c.JSON(http.StatusCreated, model.APIResponse{
 		Code:    http.StatusCreated,
-		Message: fmt.Sprintf(constans.MessageSuccessCreate, constans.OrderEntity),
+		Message: fmt.Sprintf(constans.MessageSuccessCreate, constans.InvoiceEntity),
 		Data:    invoice,
 	})
 }

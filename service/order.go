@@ -84,6 +84,11 @@ func (s *order) Create(ctx context.Context, req model.CreateOrderRequest) (*mode
 		return nil, err
 	}
 
+	if err = s.cartRepository.Delete(ctx, req.User.ID); err != nil {
+		logger.Log.Error(err.Error())
+		return nil, err
+	}
+
 	invoice := model.Invoice{
 		Subtotal:        subtotal,
 		DeliveryFee:     order.DeliveryFee,

@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/cecepsprd/foodstore-server/model"
 	"go.mongodb.org/mongo-driver/bson"
@@ -13,6 +14,8 @@ import (
 type CartRepository interface {
 	Read(ctx context.Context, userid primitive.ObjectID) ([]model.CartItem, error)
 	Update(ctx context.Context, userid primitive.ObjectID, cart model.CartItem) error
+	Delete(ctx context.Context, userid primitive.ObjectID) error
+	DeleteByID(ctx context.Context, userid primitive.ObjectID, itemid primitive.ObjectID) error
 }
 
 type mysqlCartRepository struct {
@@ -51,6 +54,34 @@ func (repo *mysqlCartRepository) Update(ctx context.Context, userid primitive.Ob
 		ctx, filter, update, opts,
 	)
 
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (repo *mysqlCartRepository) Delete(ctx context.Context, userid primitive.ObjectID) error {
+	_, err := repo.db.Collection("cart_item").
+		DeleteMany(
+			ctx,
+			bson.M{"user": userid},
+		)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (repo *mysqlCartRepository) DeleteByID(ctx context.Context, userid primitive.ObjectID, itemid primitive.ObjectID) error {
+	fmt.Println("item_id->", itemid)
+
+	_, err := repo.db.Collection("cart_item").
+		DeleteMany(
+			ctx,
+			bson.M{"user": userid, "product": itemid},
+		)
 	if err != nil {
 		return err
 	}
