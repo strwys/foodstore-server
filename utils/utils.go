@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"net/url"
 	"reflect"
+	"strconv"
 	"strings"
 
 	"github.com/cecepsprd/foodstore-server/constans"
@@ -31,6 +32,11 @@ func ConvertPrimitiveIDs(ids []string) []primitive.ObjectID {
 		primitiveIDs = append(primitiveIDs, ConvertPrimitiveID(id))
 	}
 	return primitiveIDs
+}
+
+func ConvertStringToInt(s string) int64 {
+	val, _ := strconv.Atoi(s)
+	return int64(val)
 }
 
 func GetParamsValue(c echo.Context, from interface{}, to interface{}) {
@@ -89,6 +95,16 @@ func GetUserIDByContext(ctx echo.Context) primitive.ObjectID {
 	u := ctx.Get("user")
 	claims := u.(*jwt.Token).Claims.(jwt.MapClaims)
 	return ConvertPrimitiveID(claims["id"].(string))
+}
+
+func GetUserByContext(ctx echo.Context) model.User {
+	u := ctx.Get("user")
+	claims := u.(*jwt.Token).Claims.(jwt.MapClaims)
+	return model.User{
+		ID:       ConvertPrimitiveID(claims["id"].(string)),
+		FullName: claims["username"].(string),
+		Email:    claims["email"].(string),
+	}
 }
 
 func SetHTTPStatusCode(err error) int {

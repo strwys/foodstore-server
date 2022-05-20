@@ -9,6 +9,8 @@ const (
 	TagEntity             = `Tag`
 	DeliveryAddressEntity = `DeliveryAddress`
 	CartEntity            = `Cart`
+	OrderEntity           = `Order`
+	InvoiceEntity         = `Invoice`
 )
 
 const (

@@ -14,6 +14,7 @@ type AddressRepository interface {
 	Read(context.Context) ([]model.DeliveryAddress, error)
 	Update(ctx context.Context, req model.DeliveryAddress) (*model.DeliveryAddress, error)
 	Delete(ctx context.Context, id string) error
+	ReadByID(ctx context.Context, id string) (response model.DeliveryAddress, err error)
 }
 
 type mysqlAddressRepository struct {
@@ -84,4 +85,20 @@ func (repo *mysqlAddressRepository) Delete(ctx context.Context, productID string
 	}
 
 	return nil
+}
+
+func (repo *mysqlAddressRepository) ReadByID(ctx context.Context, requestID string) (model.DeliveryAddress, error) {
+	var deliveryAddress model.DeliveryAddress
+	err := repo.db.Collection("delivery_address").
+		FindOne(
+			ctx,
+			bson.M{"_id": utils.ConvertPrimitiveID(requestID)},
+		).
+		Decode(&deliveryAddress)
+
+	if err != nil {
+		return model.DeliveryAddress{}, err
+	}
+
+	return deliveryAddress, nil
 }
