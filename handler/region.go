@@ -18,10 +18,10 @@ type region struct {
 func NewRegionHandler(e *echo.Echo) {
 	handler := &region{}
 
-	e.GET("/api/region/provinsi", handler.ReadAllProvince)
-	e.GET("/api/region/kabupaten", handler.ReadAllRegencies)
-	e.GET("/api/region/kecamatan", handler.ReadAllDistricts)
-	e.GET("/api/region/desa", handler.ReadAllVillages)
+	e.GET("/api/region/provinsi", handler.ReadAllProvince, auth())
+	e.GET("/api/region/kabupaten", handler.ReadAllRegencies, auth())
+	e.GET("/api/region/kecamatan", handler.ReadAllDistricts, auth())
+	e.GET("/api/region/desa", handler.ReadAllVillages, auth())
 }
 
 func (p *region) ReadAllProvince(c echo.Context) error {
