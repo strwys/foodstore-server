@@ -2,7 +2,6 @@ package repository
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/cecepsprd/foodstore-server/model"
 	"go.mongodb.org/mongo-driver/bson"
@@ -75,8 +74,6 @@ func (repo *mysqlCartRepository) Delete(ctx context.Context, userid primitive.Ob
 }
 
 func (repo *mysqlCartRepository) DeleteByID(ctx context.Context, userid primitive.ObjectID, itemid primitive.ObjectID) error {
-	fmt.Println("item_id->", itemid)
-
 	_, err := repo.db.Collection("cart_item").
 		DeleteMany(
 			ctx,
