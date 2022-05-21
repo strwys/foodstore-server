@@ -13,6 +13,7 @@ import (
 
 type OrderService interface {
 	Create(ctx context.Context, req model.CreateOrderRequest) (*model.Order, error)
+	Read(ctx context.Context, userid primitive.ObjectID) ([]model.Order, error)
 }
 
 type order struct {
@@ -38,6 +39,16 @@ func NewOrderService(
 	}
 }
 
+func (s *order) Read(ctx context.Context, userid primitive.ObjectID) ([]model.Order, error) {
+	orders, err := s.orderRepository.Read(ctx, userid)
+	if err != nil {
+		logger.Log.Error(err.Error())
+		return nil, err
+	}
+
+	return orders, nil
+}
+
 func (s *order) Create(ctx context.Context, req model.CreateOrderRequest) (*model.Order, error) {
 	items, err := s.cartRepository.Read(ctx, req.User.ID)
 	if err != nil {
@@ -60,10 +71,9 @@ func (s *order) Create(ctx context.Context, req model.CreateOrderRequest) (*mode
 	}
 
 	var subtotal int64
-	var orderItems []model.OrderItem
 
 	for _, item := range items {
-		orderItems = append(orderItems, model.OrderItem{
+		order.OrderItems = append(order.OrderItems, model.OrderItem{
 			Name:      item.Name,
 			Price:     int64(item.Price),
 			Qty:       item.Qty,
@@ -74,7 +84,8 @@ func (s *order) Create(ctx context.Context, req model.CreateOrderRequest) (*mode
 		subtotal += int64(item.Price)
 	}
 
-	if err = s.orderRepository.StoreOrderItem(ctx, orderItems); err != nil {
+	order.OrderItems, err = s.orderRepository.StoreOrderItem(ctx, order.OrderItems)
+	if err != nil {
 		logger.Log.Error(err.Error())
 		return nil, err
 	}

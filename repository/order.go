@@ -4,12 +4,15 @@ import (
 	"context"
 
 	"github.com/cecepsprd/foodstore-server/model"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
 type OrderRepository interface {
 	Create(ctx context.Context, order model.Order) error
-	StoreOrderItem(ctx context.Context, request []model.OrderItem) error
+	StoreOrderItem(ctx context.Context, request []model.OrderItem) ([]model.OrderItem, error)
+	Read(ctx context.Context, userid primitive.ObjectID) (response []model.Order, err error)
 }
 
 type mysqlOrderRepository struct {
@@ -20,6 +23,23 @@ func NewOrderRepository(db *mongo.Database) OrderRepository {
 	return &mysqlOrderRepository{
 		db: db,
 	}
+}
+
+func (repo *mysqlOrderRepository) Read(ctx context.Context, userid primitive.ObjectID) (response []model.Order, err error) {
+	cursor, err := repo.db.Collection("orders").
+		Find(
+			ctx,
+			bson.M{"user_id": userid},
+		)
+	if err != nil {
+		return nil, err
+	}
+
+	if err = cursor.All(ctx, &response); err != nil {
+		return nil, err
+	}
+
+	return response, nil
 }
 
 func (repo *mysqlOrderRepository) Create(ctx context.Context, order model.Order) error {
@@ -35,21 +55,26 @@ func (repo *mysqlOrderRepository) Create(ctx context.Context, order model.Order)
 	return nil
 }
 
-func (repo *mysqlOrderRepository) StoreOrderItem(ctx context.Context, request []model.OrderItem) error {
-	orderItems := make([]interface{}, 0)
+func (repo *mysqlOrderRepository) StoreOrderItem(ctx context.Context, items []model.OrderItem) ([]model.OrderItem, error) {
+	data := make([]interface{}, 0)
 
-	for _, v := range request {
-		orderItems = append(orderItems, v)
+	for _, item := range items {
+		data = append(data, item)
 	}
 
-	_, err := repo.db.Collection("order_item").
+	res, err := repo.db.Collection("order_item").
 		InsertMany(
 			ctx,
-			orderItems,
+			data,
 		)
-	if err != nil {
-		return err
+
+	for i, id := range res.InsertedIDs {
+		items[i].ID = id.(primitive.ObjectID)
 	}
 
-	return nil
+	if err != nil {
+		return nil, err
+	}
+
+	return items, nil
 }

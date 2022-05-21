@@ -22,6 +22,7 @@ func NewOrderHandler(e *echo.Echo, s service.OrderService) {
 	}
 
 	e.POST("/api/orders", handler.Create, auth())
+	e.GET("/api/orders", handler.Read, auth())
 }
 
 func (h *order) Create(c echo.Context) error {
@@ -52,5 +53,22 @@ func (h *order) Create(c echo.Context) error {
 		Code:    http.StatusCreated,
 		Message: fmt.Sprintf(constans.MessageSuccessCreate, constans.OrderEntity),
 		Data:    order,
+	})
+}
+
+func (h *order) Read(c echo.Context) error {
+	var (
+		ctx = c.Request().Context()
+	)
+
+	orders, err := h.service.Read(ctx, utils.GetUserIDByContext(c))
+	if err != nil {
+		return c.JSON(utils.SetHTTPStatusCode(err), model.ResponseError{Message: err.Error()})
+	}
+
+	return c.JSON(http.StatusOK, model.APIResponse{
+		Code:    http.StatusOK,
+		Message: fmt.Sprintf(constans.MessageSuccessReadAll, constans.OrderEntity),
+		Data:    orders,
 	})
 }

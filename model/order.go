@@ -13,9 +13,10 @@ type Order struct {
 }
 
 type OrderItem struct {
+	ID        primitive.ObjectID `bson:"_id,omitempty" json:"_id"`
 	Name      string             `bson:"name" json:"name"`
 	Price     int64              `bson:"price" json:"price"`
-	Qty       int64              `bson:"quantity" json:"quantity"`
+	Qty       int64              `bson:"quantity" json:"qty"`
 	ProductID primitive.ObjectID `bson:"product_id" json:"product_id"`
 	OrderID   primitive.ObjectID `bson:"order_id" json:"order_id"`
 }
