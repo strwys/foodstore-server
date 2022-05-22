@@ -4,7 +4,6 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"time"
 
 	//mysql driver
 
@@ -36,8 +35,7 @@ func (cfg Config) MysqlConnect() (*sql.DB, error) {
 }
 
 func (cfg Config) MongoConnect() (*mongo.Database, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
-	defer cancel()
+	ctx := context.Background()
 
 	clientOptions := options.Client()
 
