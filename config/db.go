@@ -7,6 +7,7 @@ import (
 	"time"
 
 	//mysql driver
+	"github.com/cecepsprd/foodstore-server/utils/logger"
 	_ "github.com/go-sql-driver/mysql"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -40,6 +41,9 @@ func (cfg Config) MongoConnect() (*mongo.Database, error) {
 	clientOptions := options.Client()
 
 	connString := fmt.Sprintf("mongodb+srv://%s:%s@%s/?retryWrites=true&w=majority", cfg.db.User, cfg.db.Password, cfg.db.Name)
+
+	logger.Log.Info("dburi:" + connString)
+
 	clientOptions.ApplyURI(connString)
 
 	client, err := mongo.NewClient(clientOptions)
