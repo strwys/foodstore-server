@@ -84,7 +84,7 @@ func RunServer() {
 
 	// Starting server
 	go func() {
-		err := e.Start(":" + cfg.App.HTTPPort)
+		err := e.Start(":" + os.Getenv("PORT"))
 		if err != nil {
 			log.Fatal("error starting server: ", err)
 		}
