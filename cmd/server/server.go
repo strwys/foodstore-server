@@ -76,6 +76,10 @@ func RunServer() {
 	handler.NewOrderHandler(e, orderService)
 	handler.NewInvoiceHandler(e, invoiceService)
 
+	e.GET("/api/check", func(c echo.Context) error {
+		return c.String(http.StatusOK, "OK!")
+	})
+
 	e.Static("/api/images", "images")
 
 	// Starting server
