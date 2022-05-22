@@ -1,6 +1,6 @@
 module github.com/cecepsprd/foodstore-server
 
-// +heroku goVersion go.1.18
+// +heroku goVersion go1.18
 go 1.18
 
 require (
