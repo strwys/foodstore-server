@@ -7,8 +7,9 @@ import (
 
 	//mysql driver
 
+	"log"
+
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/rs/zerolog/log"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -40,7 +41,7 @@ func (cfg Config) MongoConnect() (*mongo.Database, error) {
 	clientOptions := options.Client()
 
 	connString := fmt.Sprintf("mongodb+srv://%s:%s@%s/?retryWrites=true&w=majority", cfg.db.User, cfg.db.Password, cfg.db.Name)
-	log.Info("dburi:" + connString)
+	log.Println("dburi:" + connString)
 
 	clientOptions.ApplyURI(connString)
 	clientOptions.SetServerAPIOptions(options.ServerAPI(options.ServerAPIVersion1))
