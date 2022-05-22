@@ -39,7 +39,7 @@ func (cfg Config) MongoConnect() (*mongo.Database, error) {
 
 	clientOptions := options.Client()
 
-	connString := fmt.Sprintf("mongodb://%s:%s", cfg.db.Host, cfg.db.Port)
+	connString := fmt.Sprintf("mongodb+srv://%s:%s@%s/?retryWrites=true&w=majority", cfg.db.User, cfg.db.Password, cfg.db.Name)
 	clientOptions.ApplyURI(connString)
 
 	client, err := mongo.NewClient(clientOptions)

@@ -1,1 +1,1 @@
-web: foodstore-server
+web: ./foodstore-server start --config .env
