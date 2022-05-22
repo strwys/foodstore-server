@@ -1,0 +1,1 @@
+web: foodstore-server
