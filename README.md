@@ -1,10 +1,12 @@
 # Golang Web API
 
-Web API for an online foods marketplace. This project was built just for my learning purpose and implement some of tech i've learned.
+Web API for an online foods marketplace. 
+This project was built just for my learning purpose and implement some of tech i've learned.
+
 
 # Getting Started
 
-## Dependencies
+### Dependencies
 
 | Software | Version  |
 | -------- | -------- |
