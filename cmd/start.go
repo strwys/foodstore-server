@@ -16,7 +16,7 @@ limitations under the License.
 package cmd
 
 import (
-	"github.com/cecepsprd/foodstore-server/cmd/server"
+	"github.com/cecepsprd/foodstore-server/internal/app"
 	"github.com/spf13/cobra"
 )
 
@@ -26,7 +26,7 @@ var startCmd = &cobra.Command{
 	Short: "start",
 	Long:  `start`,
 	Run: func(cmd *cobra.Command, args []string) {
-		server.RunServer()
+		app.RunServer()
 	},
 }
 

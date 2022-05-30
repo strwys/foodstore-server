@@ -10,7 +10,7 @@ import (
 	"strings"
 
 	"github.com/cecepsprd/foodstore-server/constans"
-	"github.com/cecepsprd/foodstore-server/model"
+	"github.com/cecepsprd/foodstore-server/internal/model"
 	"github.com/cecepsprd/foodstore-server/utils/logger"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo"
