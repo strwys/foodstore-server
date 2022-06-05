@@ -9,7 +9,7 @@ import (
 	"github.com/cecepsprd/foodstore-server/internal/service"
 	"github.com/cecepsprd/foodstore-server/utils"
 	"github.com/cecepsprd/foodstore-server/utils/logger"
-	"github.com/dgrijalva/jwt-go"
+	"github.com/golang-jwt/jwt"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	"github.com/spf13/viper"
