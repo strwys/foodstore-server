@@ -12,7 +12,7 @@ import (
 	"github.com/cecepsprd/foodstore-server/constans"
 	"github.com/cecepsprd/foodstore-server/internal/model"
 	"github.com/cecepsprd/foodstore-server/utils/logger"
-	"github.com/dgrijalva/jwt-go"
+	"github.com/golang-jwt/jwt"
 	"github.com/labstack/echo"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"golang.org/x/crypto/bcrypt"
