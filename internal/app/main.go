@@ -37,7 +37,12 @@ func RunServer() {
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins: []string{"*"},
 		AllowMethods: []string{
-			http.MethodGet, http.MethodHead, http.MethodPut, http.MethodPatch, http.MethodPost, http.MethodDelete,
+			http.MethodGet,
+			http.MethodHead,
+			http.MethodPut,
+			http.MethodPatch,
+			http.MethodPost,
+			http.MethodDelete,
 		},
 	}))
 
@@ -84,7 +89,11 @@ func RunServer() {
 
 	// Starting server
 	go func() {
-		err := e.Start(":" + os.Getenv("PORT"))
+		if cfg.App.HTTPPort == "" {
+			cfg.App.HTTPPort = os.Getenv("PORT")
+		}
+
+		err := e.Start(":" + cfg.App.HTTPPort)
 		if err != nil {
 			log.Fatal("error starting server: ", err)
 		}
