@@ -1,9 +1,9 @@
 # Builder
-FROM golang:1.14.2-alpine3.11 as builder
+FROM golang:1.18.4-alpine3.16 as builder
 
 # Install git.
 # Git is required for fetching the dependencies.
-RUN apk update && apk upgrade && apk --update add git make
+RUN apk update && apk add --no-cache git
 
 # Set the current working directory inside the container
 WORKDIR /foodstore-server
@@ -22,7 +22,7 @@ RUN apk update && apk upgrade && apk --update --no-cache add tzdata && mkdir /fo
 WORKDIR /foodstore-server 
 
 # Expose port 9090 to the outside world
-EXPOSE 9090
+EXPOSE 3001
 
 # Copy the Pre-built binary file from the previous stage. Observe we also copied the .env file
 COPY --from=builder /foodstore-server/app /foodstore-server
