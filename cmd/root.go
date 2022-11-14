@@ -30,7 +30,9 @@ var rootCmd = &cobra.Command{
 	Use:   "foodstore-server",
 	Short: "foodstore-server",
 	Long:  `foodstore-server`,
-	Run:   func(cmd *cobra.Command, args []string) {},
+	Run: func(cmd *cobra.Command, args []string) {
+		cmd.Run(startCmd, nil)
+	},
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.

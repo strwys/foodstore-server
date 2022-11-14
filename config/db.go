@@ -38,6 +38,7 @@ func (cfg Config) MongoConnect() (*mongo.Database, error) {
 
 	clientOptions := options.Client()
 
+	// connString := "mongodb://localhost:27017"
 	connString := fmt.Sprintf("mongodb+srv://%s:%s@%s/?retryWrites=true&w=majority", cfg.db.User, cfg.db.Password, cfg.db.Name)
 
 	clientOptions.ApplyURI(connString)
