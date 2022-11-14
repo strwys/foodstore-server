@@ -85,7 +85,7 @@ func RunServer() {
 		return c.String(http.StatusOK, "OK!")
 	})
 
-	e.Static("/api/images", "images")
+	e.Static("/api/images", "datastore/images")
 
 	// Starting server
 	go func() {
