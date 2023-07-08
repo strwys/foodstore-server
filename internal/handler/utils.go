@@ -4,7 +4,7 @@ import (
 	"strconv"
 
 	"github.com/cecepsprd/foodstore-server/internal/model"
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 )
 
 func paging(c echo.Context) model.Paging {

@@ -8,7 +8,7 @@ import (
 	"github.com/cecepsprd/foodstore-server/internal/model"
 	"github.com/cecepsprd/foodstore-server/internal/service"
 	"github.com/cecepsprd/foodstore-server/utils"
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 )
 
 type invoice struct {

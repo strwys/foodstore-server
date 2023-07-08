@@ -15,8 +15,8 @@ import (
 	"github.com/cecepsprd/foodstore-server/internal/service"
 	"github.com/cecepsprd/foodstore-server/utils/logger"
 	"github.com/cecepsprd/foodstore-server/utils/validate"
-	"github.com/labstack/echo"
-	"github.com/labstack/echo/middleware"
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 
 	en_translations "gopkg.in/go-playground/validator.v9/translations/en"
 )

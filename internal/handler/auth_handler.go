@@ -10,8 +10,8 @@ import (
 	"github.com/cecepsprd/foodstore-server/utils"
 	"github.com/cecepsprd/foodstore-server/utils/logger"
 	"github.com/golang-jwt/jwt"
-	"github.com/labstack/echo"
-	"github.com/labstack/echo/middleware"
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 	"github.com/spf13/viper"
 )
 
@@ -46,7 +46,7 @@ func (h *AuthHandler) Login(c echo.Context) error {
 		return c.JSON(utils.SetHTTPStatusCode(err), model.ResponseError{Message: err.Error()})
 	}
 
-	return c.JSON(http.StatusCreated, response)
+	return c.JSON(http.StatusOK, response)
 }
 
 func (h *AuthHandler) Register(c echo.Context) error {

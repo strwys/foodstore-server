@@ -13,7 +13,7 @@ import (
 	"github.com/cecepsprd/foodstore-server/internal/model"
 	"github.com/cecepsprd/foodstore-server/utils/logger"
 	"github.com/golang-jwt/jwt"
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -64,12 +64,12 @@ func MappingRequest(request interface{}, model interface{}) error {
 	// convert interface to json
 	jsonRecords, err := json.Marshal(request)
 	if err != nil {
-		return fmt.Errorf("Error encode records: %s", err.Error())
+		return fmt.Errorf("error encode records: %s", err.Error())
 	}
 
 	// bind json to struct
 	if err := json.Unmarshal(jsonRecords, model); err != nil {
-		return fmt.Errorf("Error decode json to struct: %s", err.Error())
+		return fmt.Errorf("error decode json to struct: %s", err.Error())
 	}
 
 	return nil
@@ -111,14 +111,14 @@ func SetHTTPStatusCode(err error) int {
 	if err == nil {
 		return http.StatusOK
 	}
-	switch err {
-	case constans.ErrInternalServerError:
+	switch err.Error() {
+	case constans.ErrInternalServerError.Error():
 		return http.StatusInternalServerError
-	case constans.ErrNotFound:
+	case constans.ErrNotFound.Error():
 		return http.StatusNotFound
-	case constans.ErrConflict:
+	case constans.ErrConflict.Error():
 		return http.StatusConflict
-	case constans.ErrWrongEmailOrPassword:
+	case constans.ErrWrongEmailOrPassword.Error():
 		return http.StatusBadRequest
 	default:
 		return http.StatusInternalServerError

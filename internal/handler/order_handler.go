@@ -9,7 +9,7 @@ import (
 	"github.com/cecepsprd/foodstore-server/internal/service"
 	"github.com/cecepsprd/foodstore-server/utils"
 	"github.com/cecepsprd/foodstore-server/utils/logger"
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 )
 
 type order struct {

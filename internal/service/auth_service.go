@@ -38,7 +38,7 @@ func (s *authService) Login(ctx context.Context, request model.LoginRequest) (*m
 
 	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(request.Password))
 	if err != nil {
-		return nil, errors.New("password incorrect")
+		return nil, errors.New("wrong email/password")
 	}
 
 	token := jwt.New(jwt.SigningMethodHS256)
@@ -55,6 +55,7 @@ func (s *authService) Login(ctx context.Context, request model.LoginRequest) (*m
 	}
 
 	return &model.LoginResponse{
+		User:  user,
 		Token: t,
 	}, nil
 }

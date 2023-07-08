@@ -16,7 +16,7 @@ import (
 	"github.com/cecepsprd/foodstore-server/utils/logger"
 	"golang.org/x/sync/errgroup"
 
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 )
 
 type product struct {

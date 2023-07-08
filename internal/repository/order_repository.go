@@ -68,12 +68,12 @@ func (repo *mysqlOrderRepository) StoreOrderItem(ctx context.Context, items []mo
 			data,
 		)
 
-	for i, id := range res.InsertedIDs {
-		items[i].ID = id.(primitive.ObjectID)
-	}
-
 	if err != nil {
 		return nil, err
+	}
+
+	for i, id := range res.InsertedIDs {
+		items[i].ID = id.(primitive.ObjectID)
 	}
 
 	return items, nil
