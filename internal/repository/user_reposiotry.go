@@ -3,7 +3,7 @@ package repository
 import (
 	"context"
 
-	"github.com/cecepsprd/foodstore-server/internal/model"
+	"github.com/strwys/foodstore-server/internal/model"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 )

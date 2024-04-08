@@ -5,11 +5,11 @@ import (
 	"reflect"
 	"time"
 
-	"github.com/cecepsprd/foodstore-server/constans"
-	"github.com/cecepsprd/foodstore-server/internal/model"
-	"github.com/cecepsprd/foodstore-server/internal/repository"
-	"github.com/cecepsprd/foodstore-server/utils"
-	"github.com/cecepsprd/foodstore-server/utils/logger"
+	"github.com/strwys/foodstore-server/constans"
+	"github.com/strwys/foodstore-server/internal/model"
+	"github.com/strwys/foodstore-server/internal/repository"
+	"github.com/strwys/foodstore-server/utils"
+	"github.com/strwys/foodstore-server/utils/logger"
 )
 
 type UserService interface {

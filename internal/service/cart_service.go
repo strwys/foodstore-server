@@ -4,9 +4,9 @@ import (
 	"context"
 	"time"
 
-	"github.com/cecepsprd/foodstore-server/internal/model"
-	"github.com/cecepsprd/foodstore-server/internal/repository"
-	"github.com/cecepsprd/foodstore-server/utils/logger"
+	"github.com/strwys/foodstore-server/internal/model"
+	"github.com/strwys/foodstore-server/internal/repository"
+	"github.com/strwys/foodstore-server/utils/logger"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 

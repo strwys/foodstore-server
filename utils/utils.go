@@ -9,11 +9,11 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/cecepsprd/foodstore-server/constans"
-	"github.com/cecepsprd/foodstore-server/internal/model"
-	"github.com/cecepsprd/foodstore-server/utils/logger"
 	"github.com/golang-jwt/jwt"
 	"github.com/labstack/echo/v4"
+	"github.com/strwys/foodstore-server/constans"
+	"github.com/strwys/foodstore-server/internal/model"
+	"github.com/strwys/foodstore-server/utils/logger"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"golang.org/x/crypto/bcrypt"
 )

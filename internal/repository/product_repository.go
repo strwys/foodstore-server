@@ -4,8 +4,8 @@ import (
 	"context"
 	"reflect"
 
-	"github.com/cecepsprd/foodstore-server/internal/model"
-	"github.com/cecepsprd/foodstore-server/utils"
+	"github.com/strwys/foodstore-server/internal/model"
+	"github.com/strwys/foodstore-server/utils"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"

@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/cecepsprd/foodstore-server/constans"
-	"github.com/cecepsprd/foodstore-server/internal/model"
-	"github.com/cecepsprd/foodstore-server/internal/service"
-	"github.com/cecepsprd/foodstore-server/utils"
 	"github.com/labstack/echo/v4"
+	"github.com/strwys/foodstore-server/constans"
+	"github.com/strwys/foodstore-server/internal/model"
+	"github.com/strwys/foodstore-server/internal/service"
+	"github.com/strwys/foodstore-server/utils"
 )
 
 type invoice struct {

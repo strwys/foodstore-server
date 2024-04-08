@@ -18,7 +18,7 @@ This project was built just for my learning purpose and implement some of tech i
 
 - Clone `repository`
 ```shell
-$ git clone https://github.com/cecepsprd/foodstore-server.git
+$ git clone https://github.com/strwys/foodstore-server.git
 ```
 
 - Copy `.env_example` into `.env`

@@ -5,8 +5,8 @@ import (
 	"errors"
 	"time"
 
-	"github.com/cecepsprd/foodstore-server/internal/model"
 	"github.com/golang-jwt/jwt"
+	"github.com/strwys/foodstore-server/internal/model"
 	"golang.org/x/crypto/bcrypt"
 )
 

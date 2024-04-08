@@ -1,4 +1,4 @@
-module github.com/cecepsprd/foodstore-server
+module github.com/strwys/foodstore-server
 
 // +heroku goVersion go1.18
 go 1.18

@@ -9,14 +9,14 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/cecepsprd/foodstore-server/config"
-	"github.com/cecepsprd/foodstore-server/internal/handler"
-	"github.com/cecepsprd/foodstore-server/internal/repository"
-	"github.com/cecepsprd/foodstore-server/internal/service"
-	"github.com/cecepsprd/foodstore-server/utils/logger"
-	"github.com/cecepsprd/foodstore-server/utils/validate"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"github.com/strwys/foodstore-server/config"
+	"github.com/strwys/foodstore-server/internal/handler"
+	"github.com/strwys/foodstore-server/internal/repository"
+	"github.com/strwys/foodstore-server/internal/service"
+	"github.com/strwys/foodstore-server/utils/logger"
+	"github.com/strwys/foodstore-server/utils/validate"
 
 	en_translations "gopkg.in/go-playground/validator.v9/translations/en"
 )

@@ -3,8 +3,8 @@ package handler
 import (
 	"strconv"
 
-	"github.com/cecepsprd/foodstore-server/internal/model"
 	"github.com/labstack/echo/v4"
+	"github.com/strwys/foodstore-server/internal/model"
 )
 
 func paging(c echo.Context) model.Paging {
